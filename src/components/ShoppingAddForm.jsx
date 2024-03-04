@@ -18,9 +18,11 @@ class ShoppingAddForm extends React.Component {
     onAdd = () => {
         const {title, number} = this.state
         if (title.trim() && number.trim()) {
-            const data = {title, number}
-            console.log(data)
+            const obj = {title, number}
+            this.props.onAddItem(obj)
             this.setState({title: "", number: ""})
+        } else {
+            alert("Inputs should be completed fully!")
         }
     }
 
