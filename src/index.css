@@ -95,16 +95,20 @@
     gap: 10px;
 }
 
-.form input {
+.form input, .search__input {
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.6);
-    height: 35px;
+    height: 45px;
     outline: none;
     border: none;
     padding: 0 10px;
 }
+.search__input {
+    width: 100%;
+    margin: 10px 0;
+}
 
-.form input::placeholder {
+.form input::placeholder, .search__input::placeholder {
     font-size: 18px;
 }
 

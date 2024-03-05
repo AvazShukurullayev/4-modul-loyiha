@@ -5,12 +5,14 @@ import Filter from "./Filter.jsx";
 import ShoppingAddForm from "./ShoppingAddForm.jsx";
 import {v4 as uuidv4} from 'uuid';
 import {arr} from "../constants/index.js";
+import SearchPanel from "./SearchPanel.jsx";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: arr
+            data: arr,
+            search: ""
         }
     }
 
@@ -36,14 +38,27 @@ class App extends React.Component {
         this.setState({data: newArr})
     }
 
+    onSearch = (arr, term) => {
+        if (term.trim()) {
+            return arr
+        }
+        return arr.filter(item => item.title.toLowerCase().indexOf(term.toLowerCase()) > -1)
+    }
+
+    onUpdateSearch = (search) => {
+        this.setState({search})
+    }
+
     render() {
-        const {data} = this.state
+        const {data, search} = this.state
+        const allData = this.onSearch(data, search)
         return (<div className="app">
             <div className="wrapper">
                 <div className="card">
                     <Information length={data.length}/>
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <ShoppingAddForm onAddItem={this.onAddItem}/>
-                    <ShoppingList data={data} onDelete={this.onDelete} onToggleActive={this.onToggleActive}/>
+                    <ShoppingList data={allData} onDelete={this.onDelete} onToggleActive={this.onToggleActive}/>
                     <Filter/>
                 </div>
             </div>
