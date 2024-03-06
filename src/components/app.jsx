@@ -12,7 +12,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             data: arr,
-            search: ""
+            search: "",
+            filter: "all"
         }
     }
 
@@ -38,7 +39,7 @@ class App extends React.Component {
         this.setState({data: newArr})
     }
 
-    onSearch = (arr, term) => {
+    searchData = (arr, term) => {
         if (term.trim()) {
             return arr
         }
@@ -49,17 +50,45 @@ class App extends React.Component {
         this.setState({search})
     }
 
+    filterData = (arr, filter) => {
+        switch (filter) {
+            case "completed":
+                return arr.filter(item => item.active)
+            case "big-size":
+                return arr.filter(item => item.size > 10)
+            default:
+                return arr
+        }
+    }
+
+    onFilterSelect = (filter) => {
+        this.setState({filter})
+    }
+
     render() {
-        const {data, search} = this.state
-        const allData = this.onSearch(data, search)
+        const {data, search, filter} = this.state
+        const allData = this.filterData(this.searchData(data, search), filter)
         return (<div className="app">
             <div className="wrapper">
                 <div className="card">
-                    <Information length={data.length}/>
-                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <ShoppingAddForm onAddItem={this.onAddItem}/>
-                    <ShoppingList data={allData} onDelete={this.onDelete} onToggleActive={this.onToggleActive}/>
-                    <Filter/>
+                    <Information
+                        length={data.length}
+                    />
+                    <SearchPanel
+                        onUpdateSearch={this.onUpdateSearch}
+                    />
+                    <ShoppingAddForm
+                        onAddItem={this.onAddItem}
+                    />
+                    <ShoppingList
+                        data={allData}
+                        onDelete={this.onDelete}
+                        onToggleActive={this.onToggleActive}
+                    />
+                    <Filter
+                        filter={filter}
+                        onFilterSelect={this.onFilterSelect}
+                    />
                 </div>
             </div>
         </div>)

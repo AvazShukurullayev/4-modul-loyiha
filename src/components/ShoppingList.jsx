@@ -8,9 +8,10 @@ class ShoppingList extends React.Component {
 
     render() {
         const {data, onDelete, onToggleActive} = this.props
+        const emptyMsg = <h3 className="empty__message">No data...</h3>
         return (<div className="shopping__list">
-            {data.map((item) => (<ShoppingListItem item={item} key={item.id} onDelete={() => onDelete(item.id)}
-                                                   onToggleActive={() => onToggleActive(item.id)}/>))}
+            {data.length ? data.map((item) => (<ShoppingListItem item={item} key={item.id} onDelete={() => onDelete(item.id)}
+                                                   onToggleActive={() => onToggleActive(item.id)}/>)) : emptyMsg}
         </div>)
     }
 }
