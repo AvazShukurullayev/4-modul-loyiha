@@ -6,6 +6,7 @@ import ShoppingAddForm from "./ShoppingAddForm.jsx";
 import {v4 as uuidv4} from 'uuid';
 import {arr} from "../constants/index.js";
 import SearchPanel from "./SearchPanel.jsx";
+import "./app.scss"
 
 class App extends React.Component {
     constructor(props) {
